@@ -11,7 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Prepare
-        run: echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
+        run: |
+          echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
+        env:
+          GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
       - name: Install build deps
         run: sudo apt-get install debhelper dput libqt5websockets5-dev qtbase5-dev
       - name: Build source package
