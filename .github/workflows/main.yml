@@ -13,6 +13,9 @@ jobs:
       - name: Prepare
         run: |
           echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
+          oldversion=`dpkg-parsechangelog --show-field version`
+          timestamp=`date +%Y%m%d%H%M%S`
+          dch -v "$oldversion-mzanetti~$timestamp" "LP upload" -D mantic
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
       - name: Install build deps
