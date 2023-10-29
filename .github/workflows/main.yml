@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install build deps
+        run: sudo apt-get install libqt5websockets5-dev qtbase5-dev
       - name: Build source package
         run: dpkg-buildpackage -S -us -uc
       - name: Upload to repo
