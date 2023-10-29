@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install build deps
+        run: sudo apt-get install devscripts debhelper dput libqt5websockets5-dev qtbase5-dev
       - name: Prepare
         run: |
           echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import
@@ -18,8 +20,6 @@ jobs:
           dch -v "$oldversion-mzanetti~$timestamp" "LP upload" -D mantic
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
-      - name: Install build deps
-        run: sudo apt-get install debhelper dput libqt5websockets5-dev qtbase5-dev
       - name: Build source package
         run: dpkg-buildpackage -S -kmichael_zanetti@gmx.net
       - name: Upload to repo
