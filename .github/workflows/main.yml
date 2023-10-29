@@ -1,0 +1,9 @@
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build source package
+        run: dpkg-buildpackage -S -us -uc
+      - name: Upload to repo
+        run: dput ppa:mzanetti/testing ../nymea-mqtt*_source.changes
