@@ -1,4 +1,10 @@
-jobs:
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:    
   publish:
     runs-on: ubuntu-latest
     steps:
